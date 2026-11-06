@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+<title>URY Desktop</title>
+<style>
+body{font-family:Segoe UI,Tahoma,sans-serif;background:#f4f6fa;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+.card{background:#fff;padding:32px 36px;border-radius:14px;box-shadow:0 6px 30px #0001;width:460px}
+h2{margin:0 0 6px}p{color:#667;margin:0 0 18px;font-size:14px}
+input{width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:1px solid #ccd;border-radius:8px;direction:ltr}
+button{margin-top:14px;width:100%;padding:12px;font-size:16px;border:0;border-radius:8px;background:#2563eb;color:#fff;cursor:pointer}
+#msg{margin-top:12px;font-size:14px;color:#c0392b;min-height:18px}
+</style></head><body><div class="card">
+<h2>الاتصال بخادم URY</h2>
+<p>أدخل عنوان خادم Frappe/ERPNext الذي عليه تطبيق URY.</p>
+<input id="url" placeholder="http://192.168.1.10:8000 أو https://pos.example.com" autofocus>
+<button id="go">اتصال</button><div id="msg"></div></div>
+<script>
+const $=id=>document.getElementById(id);
+uryDesktop.getConfig().then(c=>{ if(c.serverUrl) $('url').value=c.serverUrl; });
+async function go(){
+  $('msg').style.color='#667'; $('msg').textContent='جارٍ الاتصال...';
+  const r=await uryDesktop.setServer($('url').value);
+  if(!r.ok){ $('msg').style.color='#c0392b'; $('msg').textContent=r.error; }
+}
+$('go').onclick=go; $('url').onkeydown=e=>{ if(e.key==='Enter') go(); };
+</script></body></html>

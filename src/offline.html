@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+<title>لا يوجد اتصال</title>
+<style>
+body{font-family:Segoe UI,Tahoma,sans-serif;background:#f4f6fa;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center}
+.card{background:#fff;padding:36px;border-radius:14px;box-shadow:0 6px 30px #0001;width:440px}
+button{margin:6px;padding:11px 20px;font-size:15px;border:0;border-radius:8px;cursor:pointer}
+.p{background:#2563eb;color:#fff}.s{background:#e5e7eb}
+code{display:block;direction:ltr;color:#888;font-size:12px;margin:10px 0}
+</style></head><body><div class="card">
+<h2>تعذر الاتصال بالخادم</h2>
+<p>تأكد من تشغيل الخادم ومن اتصال الشبكة.</p>
+<code id="err"></code>
+<button class="p" onclick="uryDesktop.retry()">إعادة المحاولة</button>
+<button class="s" onclick="location.href='setup.html'">تغيير عنوان الخادم</button>
+</div>
+<script>
+const q=new URLSearchParams(location.search);
+document.getElementById('err').textContent=(q.get('url')||'')+'  '+(q.get('error')||'');
+setInterval(()=>uryDesktop.retry(),15000);
+</script></body></html>
